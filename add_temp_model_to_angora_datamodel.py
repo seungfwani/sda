@@ -7,7 +7,6 @@ import argparse
 import uuid
 
 
-
 def run(args):
     host = args.host
     port = args.port
