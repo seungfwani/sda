@@ -15,7 +15,7 @@ def run(args):
     password = args.password
     num = args.num
 
-    conn = pymysql.connect(host=host, user=user, password=password, db='ANGORA_METASTORE', charset='utf8')
+    conn = pymysql.connect(host=host, port=port, user=user, password=password, db='ANGORA_METASTORE', charset='utf8')
     cur = conn.cursor()
 
     len_num = len(str(num))
@@ -53,7 +53,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Insert temp data to angora data-model.')
     parser.add_argument('num', metavar='N', type=int, help='How many data do you want to insert?')
     parser.add_argument('--host', type=str, required=True, help='Host ip of angora metastore(mariadb)')
-    parser.add_argument('--port', type=str, required=True, help='port of angora metastore(mariadb)')
+    parser.add_argument('--port', type=int, required=True, help='port of angora metastore(mariadb)')
     parser.add_argument('-u', '--user', type=str, required=True, help='user of angora metastore(mariadb)')
     parser.add_argument('-p', '--password', type=str, required=True, help='password of angora metastore(mariadb)')
 
