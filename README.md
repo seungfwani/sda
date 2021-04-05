@@ -14,8 +14,8 @@ pip install -r requirement.txt
 
 ```python
 # help
-python add_dump_model_to_angora_datamodel.py -h
+python add_temp_model_to_angora_datamodel.py -h
 
 # insert
-python add_dump_model_to_angora_datamodel.py --host <ip> --port <port> -u <user> -p <password> <N>
+python add_temp_model_to_angora_datamodel.py --host <ip> --port <port> -u <user> -p <password> <N>
 ```
