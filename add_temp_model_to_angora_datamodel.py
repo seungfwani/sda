@@ -5,6 +5,7 @@ mariadb 의 host, port, user, password 를 입력하고, 개수를 넣으면 자
 import pymysql
 import argparse
 import uuid
+import json
 
 
 def run(args):
@@ -17,14 +18,23 @@ def run(args):
     conn = pymysql.connect(host=host, user=user, password=password, db='ANGORA_METASTORE', charset='utf8')
     cur = conn.cursor()
 
-    name = str(uuid.uuid4())
     len_num = len(str(num))
+    name = str(uuid.uuid4())[:-len_num - 1]
+    print('=' * 30)
+    print(f"Temp datamodel name will be '{name}_<number>'")
+    print('=' * 30)
 
-    base_query = "insert into ANGORA_DATAMODELS (NAME, USERID, ID) values (%s, %s, %s)"
+    base_query = "insert into ANGORA_DATAMODELS (NAME, USERID, ID, DATASET, FIELDS) values (%s, %s, %s, %s, %s)"
     datas = []
     for n in range(num):
-        new_name = name[:-len_num - 1] + '_' + f"{n:0{len_num}}"
-        datas.append([new_name, 'root', new_name])
+        new_name = name + '_' + f"{n:0{len_num}}"
+        datas.append([
+            new_name,
+            'root',
+            new_name,
+            json.dumps({"format": "iris", "table": "NOTABLE"}),
+            json.dumps([{"name": "HOST", "type": "TEXT", "alias": ""}]),
+        ])
 
     start_msg = f"Start inserting {num} data to maraidb!"
     print('+' * len(start_msg))
